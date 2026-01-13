@@ -513,7 +513,7 @@ class NamedMovable(Movable[T_co], HasHints, Protocol):
     ...
 
 
-def check_supports(obj: T, protocol: type[Any]) -> T:
+def check_supports(obj: T, protocol: type[T]) -> T:
     """Check that an object supports a protocol
 
     This exists so that multiple protocol checks can be run in a mypy
