@@ -5,23 +5,23 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bluesky-interfaces"
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 description = "Data model used by the bluesky ecosystem."
-dependencies = [
-  "jsonschema>=4",
-  "numpy",
-  "typing_extensions",
-]
+dependencies = ["numpy", "typing_extensions"]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
 requires-python = ">=3.11"
+
+[project.optional-dependencies]
+jsonschema = ["jsonschema>=4"]
+basemodels = ["pydantic"]
 
 [dependency-groups]
 dev = [
@@ -50,6 +50,9 @@ dev = [
   # For schema generation.
   "pydantic",
   "datamodel-code-generator>=0.53.0",
+
+  # For basemodels.
+  "jsonschema>=4",
 ]
 
 [project.urls]
@@ -100,87 +103,87 @@ passenv = ["*"]
 [tool.tox.env.pre-commit]
 description = "Run pre-commit on all files"
 commands = [
-    [
-        "pre-commit",
-        "run",
-        "--all-files",
-        "--show-diff-on-failure",
-        { replace = "posargs", default = [
-        ], extend = true },
-    ],
+  [
+    "pre-commit",
+    "run",
+    "--all-files",
+    "--show-diff-on-failure",
+    { replace = "posargs", default = [
+    ], extend = true },
+  ],
 ]
 
 [tool.tox.env.type-checking]
 description = "Run mypy"
 commands = [
-    [
-        "mypy",
-        "src",
-        "tests",
-        { replace = "posargs", default = [
-        ], extend = true },
-    ],
+  [
+    "mypy",
+    "src",
+    "tests",
+    { replace = "posargs", default = [
+    ], extend = true },
+  ],
 ]
 
 [tool.tox.env.tests]
 description = "Run tests with coverage"
 commands = [
-    [
-        "pytest",
-        "--cov=bluesky_interfaces",
-        "--cov-report",
-        "term",
-        "--cov-report",
-        "xml:cov.xml",
-        { replace = "posargs", default = [
-        ], extend = true },
-    ],
+  [
+    "pytest",
+    "--cov=bluesky_interfaces",
+    "--cov-report",
+    "term",
+    "--cov-report",
+    "xml:cov.xml",
+    { replace = "posargs", default = [
+    ], extend = true },
+  ],
 ]
 
 [tool.tox.env.docs]
 description = "Run docs build with clean environment"
 commands = [
-    [
-        "sphinx-build",
-        "--fresh-env",
-        "--show-traceback",
-        "--fail-on-warning",
-        "--keep-going",
-        "docs",
-        "build/html",
-        { replace = "posargs", default = [
-        ], extend = true },
-    ],
+  [
+    "sphinx-build",
+    "--fresh-env",
+    "--show-traceback",
+    "--fail-on-warning",
+    "--keep-going",
+    "docs",
+    "build/html",
+    { replace = "posargs", default = [
+    ], extend = true },
+  ],
 ]
 
 [tool.tox.env.docs-autobuild]
 description = "Run docs with autobuild on change"
 commands = [
-    [
-        "sphinx-autobuild",
-        "--show-traceback",
-        "--watch",
-        "README.md",
-        "docs",
-        "build/html",
-        { replace = "posargs", default = [
-        ], extend = true },
-    ],
+  [
+    "sphinx-autobuild",
+    "--show-traceback",
+    "--watch",
+    "README.md",
+    "docs",
+    "build/html",
+    { replace = "posargs", default = [
+    ], extend = true },
+  ],
 ]
 
 [tool.ruff]
 src = ["src"]
 line-length = 88
 lint.select = [
-    "B",   # flake8-bugbear - https://docs.astral.sh/ruff/rules/#flake8-bugbear-b
-    "C4",  # flake8-comprehensions - https://docs.astral.sh/ruff/rules/#flake8-comprehensions-c4
-    "E",   # pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
-    "F",   # pyflakes rules - https://docs.astral.sh/ruff/rules/#pyflakes-f
-    "N",   # pep8-naming - https://docs.astral.sh/ruff/rules/#pep8-naming-n
-    "W",   # pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
-    "I",   # isort - https://docs.astral.sh/ruff/rules/#isort-i
-    "UP",  # pyupgrade - https://docs.astral.sh/ruff/rules/#pyupgrade-up
-    "SLF", # self - https://docs.astral.sh/ruff/settings/#lintflake8-self
+  "B",   # flake8-bugbear - https://docs.astral.sh/ruff/rules/#flake8-bugbear-b
+  "C4",  # flake8-comprehensions - https://docs.astral.sh/ruff/rules/#flake8-comprehensions-c4
+  "E",   # pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
+  "F",   # pyflakes rules - https://docs.astral.sh/ruff/rules/#pyflakes-f
+  "N",   # pep8-naming - https://docs.astral.sh/ruff/rules/#pep8-naming-n
+  "W",   # pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
+  "I",   # isort - https://docs.astral.sh/ruff/rules/#isort-i
+  "UP",  # pyupgrade - https://docs.astral.sh/ruff/rules/#pyupgrade-up
+  "SLF", # self - https://docs.astral.sh/ruff/settings/#lintflake8-self
 ]
 
 [tool.ruff.lint.per-file-ignores]

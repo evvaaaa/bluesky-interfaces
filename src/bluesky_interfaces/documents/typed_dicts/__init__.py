@@ -1,4 +1,4 @@
-# generated in `event_model/generate`
+# generated in `bluesky_interfaces/documents/generate`
 
 from typing import Generic, Literal, TypeVar
 
@@ -6,7 +6,7 @@ from typing import Generic, Literal, TypeVar
 # NamedTuple cannot yet be generic.
 from typing_extensions import NamedTuple
 
-from event_model.document_names import DocumentNames
+from bluesky_interfaces.documents.document_names import DocumentNames
 
 from .datum import *  # noqa: F403
 from .datum_page import *  # noqa: F403
@@ -33,7 +33,7 @@ class DocWrapper(Generic[NameT, DocT], NamedTuple):
     """The document itself."""
 
 
-DocumentType = (
+Typed_DictType = (
     type[Datum]  # noqa: F405
     | type[DatumPage]  # noqa: F405
     | type[Event]  # noqa: F405
@@ -46,7 +46,7 @@ DocumentType = (
     | type[StreamResource]  # noqa: F405
 )
 
-Document = (
+Typed_Dict = (
     Datum  # noqa: F405
     | DatumPage  # noqa: F405
     | Event  # noqa: F405
@@ -70,7 +70,7 @@ NamedRunStop = DocWrapper[Literal[DocumentNames.stop], RunStop]  # noqa: F405
 NamedStreamDatum = DocWrapper[Literal[DocumentNames.stream_datum], StreamDatum]  # noqa: F405
 NamedStreamResource = DocWrapper[Literal[DocumentNames.stream_resource], StreamResource]  # noqa: F405
 
-NamedDocument = (
+NamedTyped_Dict = (
     NamedDatum  # noqa: F405
     | NamedDatumPage  # noqa: F405
     | NamedEvent  # noqa: F405
@@ -83,7 +83,7 @@ NamedDocument = (
     | NamedStreamResource  # noqa: F405
 )
 
-ALL_DOCUMENTS: tuple[DocumentType, ...] = (
+ALL_TYPED_DICTS: tuple[Typed_DictType, ...] = (
     Datum,  # noqa: F405
     DatumPage,  # noqa: F405
     Event,  # noqa: F405

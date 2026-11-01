@@ -1,9 +1,4 @@
-import sys
-
-if sys.version_info >= (3, 11):
-    from enum import StrEnum
-else:
-    from ._strenum_backport import StrEnum
+from enum import StrEnum
 
 
 class DocumentNames(StrEnum):
