@@ -11,19 +11,15 @@ from subprocess import check_output
 
 import requests
 
-import event_model
+import bluesky_interfaces
 
 # -- General configuration ------------------------------------------------
 
 # General information about the project.
-project = "event-model"
-copyright = "2019, Brookhaven National Lab"
-author = "Brookhaven National Lab"
-
-language = "en"
+project = "bluesky-interfaces"
 
 # The full version, including alpha/beta/rc tags.
-release = event_model.__version__
+release = bluesky_interfaces.__version__
 
 # The short X.Y version.
 if "+" in release:
@@ -199,7 +195,7 @@ texinfo_documents = [
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-github_repo = "event-model"
+github_repo = "bluesky-interfaces"
 github_user = "bluesky"
 switcher_json = f"https://blueskyproject.io/{github_repo}/switcher.json"
 switcher_exists = requests.get(switcher_json).ok

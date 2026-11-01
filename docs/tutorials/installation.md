@@ -2,7 +2,7 @@
 
 ## Check your version of python
 
-You will need python 3.8 or later. You can check your version of python by
+You will need python 3.11 or later. You can check your version of python by
 typing into a terminal:
 
 ```
@@ -24,19 +24,19 @@ $ source /path/to/venv/bin/activate
 You can now use `pip` to install the library and its dependencies:
 
 ```
-$ python3 -m pip install event-model
+$ python3 -m pip install bluesky-interfaces
 ```
 
 If you require a feature that is not currently released you can also install
 from github:
 
 ```
-$ python3 -m pip install git+https://github.com/bluesky/event-model.git
+$ python3 -m pip install git+https://github.com/bluesky/bluesky-interfaces.git
 ```
 
 The library should now be installed and the commandline interface on your path.
 You can check the version that has been installed by typing:
 
 ```
-$ event-model --version
+$ bluesky-interfaces --version
 ```

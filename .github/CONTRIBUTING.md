@@ -1,6 +1,10 @@
 # Contributing
 
-## Getting Started
+Contributions and issues are most welcome! All issues and pull requests are
+handled through [GitHub](https://github.com/bluesky/bluesky-interfaces/issues). Also, please check for any existing issues before
+filing a new one. If you have a great idea but it involves big changes, please
+file a ticket before making a pull request! We want to make sure you don't spend
+your time coding something that might not fit the scope of the project.
 
 * Make sure you have a [GitHub account](https://github.com/signup/free)
 * Submit a ticket for your issue, assuming one does not already exist.
@@ -8,7 +12,9 @@
   * Make sure you fill in the earliest version that you know has the issue.
 * Fork the repository on GitHub
 
-## Making Changes
+Github also offers [discussions](https://github.com/bluesky/bluesky-interfaces/discussions) as a place to ask questions and share ideas. If
+your issue is open ended and it is not obvious when it can be "closed", please
+raise it as a discussion instead.
 
 * Create a topic branch from where you want to base your work.
   * This is usually the main branch.
@@ -75,4 +81,4 @@ Hints to make the integration of your changes easy (and happen faster):
 * All algorithms need documentation, don't forget the .rst file
 * Don't take changes requests to change your code personally
 
-For more information on common tasks like setting up a developer environment, running the tests, and setting a pre-commit hook, see the template's [How-to guides](https://diamondlightsource.github.io/python-copier-template/2.6.0/how-to.html).
+For more information on common tasks like setting up a developer environment, running the tests, and setting a pre-commit hook, see the template's [How-to guides](https://diamondlightsource.github.io/python-copier-template/5.5.0/how-to.html).

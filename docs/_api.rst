@@ -2,7 +2,7 @@
 
 ..
    This page is not included in the TOC tree, but must exist so that the
-   autosummary pages are generated for event_model and all its
+   autosummary pages are generated for bluesky_interfaces and all its
    subpackages
 
 API
@@ -13,4 +13,4 @@ API
     :template: custom-module-template.rst
     :recursive:
 
-    event_model
+    bluesky_interfaces

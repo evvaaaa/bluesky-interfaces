@@ -1,15 +1,15 @@
 # Changes here will be overwritten by Copier
-_commit: 2.6.0
+_commit: 5.5.0
 _src_path: gh:DiamondLightSource/python-copier-template
 author_email: dallan@bnl.gov
 author_name: Brookhaven National Lab
 description: Data model used by the bluesky ecosystem.
-distribution_name: event-model
+distribution_name: bluesky-interfaces
 docker: false
 docs_type: sphinx
 git_platform: github.com
 github_org: bluesky
-package_name: event_model
+package_name: bluesky_interfaces
 pypi: true
-repo_name: event-model
+repo_name: bluesky-interfaces
 type_checker: mypy

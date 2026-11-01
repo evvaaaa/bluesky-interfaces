@@ -1,9 +1,9 @@
-[![CI](https://github.com/bluesky/event-model/actions/workflows/ci.yml/badge.svg)](https://github.com/bluesky/event-model/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/bluesky/event-model/branch/main/graph/badge.svg)](https://codecov.io/gh/bluesky/event-model)
-[![PyPI](https://img.shields.io/pypi/v/event-model.svg)](https://pypi.org/project/event-model)
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://choosealicense.com/licenses/bsd-3-clause)
+[![CI](https://github.com/bluesky/bluesky-interfaces/actions/workflows/ci.yml/badge.svg)](https://github.com/bluesky/bluesky-interfaces/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/bluesky/bluesky-interfaces/branch/main/graph/badge.svg)](https://codecov.io/gh/bluesky/bluesky-interfaces)
+[![PyPI](https://img.shields.io/pypi/v/bluesky-interfaces.svg)](https://pypi.org/project/bluesky-interfaces)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-# ![event-model](https://raw.githubusercontent.com/bluesky/event-model/main/docs/images/event-model-logo.svg)
+# bluesky_interfaces
 
 Data model used by the bluesky ecosystem.
 
@@ -15,11 +15,12 @@ This repository contains the formal schemas for bluesky's streaming data model
 and some Python tooling for composing, validating, and transforming documents
 in the model.
 
-Source          | <https://github.com/bluesky/event-model>
+What            | Where
 :---:           | :---:
-PyPI            | `pip install event-model`
-Documentation   | <https://bluesky.github.io/event-model>
-Releases        | <https://github.com/bluesky/event-model/releases>
+Source          | <https://github.com/bluesky/bluesky-interfaces>
+PyPI            | `pip install bluesky-interfaces`
+Documentation   | <https://bluesky.github.io/bluesky-interfaces>
+Releases        | <https://github.com/bluesky/bluesky-interfaces/releases>
 
 ## Where is my data?
 

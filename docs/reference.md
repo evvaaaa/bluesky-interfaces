@@ -6,7 +6,7 @@ Technical reference material including APIs and release notes.
 :maxdepth: 1
 :glob:
 
-API <_api/event_model>
+API <_api/bluesky_interfaces>
 genindex
-reference/*
+Release Notes <https://github.com/bluesky/bluesky-interfaces/releases>
 ```
