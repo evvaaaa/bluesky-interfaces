@@ -1,6 +1,6 @@
 import collections.abc
+from pathlib import Path
 import copy
-import importlib.resources as importlib_resources
 import inspect
 import itertools
 import json
@@ -22,72 +22,54 @@ from typing import (
 
 import jsonschema
 import numpy
-
-from ._version import __version__
-from .document_names import DocumentNames
-from .documents.datum import Datum
-from .documents.datum_page import DatumPage
-from .documents.event import Event, PartialEvent
-from .documents.event_descriptor import (
-    Configuration,
-    DataKey,
-    Dtype,
+from bluesky_interfaces.documents.document_names import DocumentNames
+from bluesky_interfaces.documents.typed_dicts import (
+    RunStart,
+    RunStop,
     EventDescriptor,
-    Limits,
-    LimitsRange,
+    Resource,
+    Event,
+    Datum,
+    EventPage,
+    DatumPage,
+    StreamDatum,
+    StreamResource,
+)
+from bluesky_interfaces.documents.typed_dicts.event_descriptor import (
+    DataKey,
+    Configuration,
     PerObjectHint,
 )
-from .documents.event_page import EventPage, PartialEventPage
-from .documents.resource import PartialResource, Resource
-from .documents.run_start import (
-    CalculatedEventProjection,
-    Calculation,
-    ConfigurationProjection,
-    Hints,
-    LinkedEventProjection,
-    Projections,
-    RunStart,
-    StaticProjection,
-)
-from .documents.run_stop import RunStop
-from .documents.stream_datum import StreamDatum, StreamRange
-from .documents.stream_resource import StreamResource
+from bluesky_interfaces.documents.typed_dicts.stream_datum import StreamRange
+
+SCHEMA_PATH = "schemas"
+SCHEMA_NAMES = {
+    DocumentNames.start: "run_start.json",
+    DocumentNames.stop: "run_stop.json",
+    DocumentNames.event: "event.json",
+    DocumentNames.event_page: "event_page.json",
+    DocumentNames.descriptor: "event_descriptor.json",
+    DocumentNames.datum: "datum.json",
+    DocumentNames.datum_page: "datum_page.json",
+    DocumentNames.resource: "resource.json",
+    DocumentNames.stream_datum: "stream_datum.json",
+    DocumentNames.stream_resource: "stream_resource.json",
+    DocumentNames.bulk_datum: "bulk_datum.json",
+    DocumentNames.bulk_events: "bulk_events.json",
+}
+schemas = {}
+for name, filename in SCHEMA_NAMES.items():
+    ref = Path(__file__).parent / filename
+    with ref.open() as f:
+        schemas[name] = json.load(f)
+
 
 __all__ = [
     # Document types
-    "Datum",
-    "DatumPage",
-    "Event",
-    "PartialEvent",
-    "Configuration",
-    "DataKey",
-    "Dtype",
-    "EventDescriptor",
-    "Limits",
-    "LimitsRange",
-    "PerObjectHint",
-    "EventPage",
-    "PartialEventPage",
-    "PartialResource",
-    "Resource",
-    "Calculation",
-    "Hints",
-    "LinkedEventProjection",
-    "StaticProjection",
-    "CalculatedEventProjection",
-    "ConfigurationProjection",
-    "Projections",
-    "RunStart",
-    "RunStop",
-    "StreamDatum",
-    "StreamRange",
-    "StreamResource",
     # Schema and version
-    "DocumentNames",
     "schemas",
     "schema_validators",
     "compose_run",
-    "__version__",
 ]
 
 
@@ -1786,28 +1768,6 @@ class MismatchedDataKeys(InvalidData):
     """
 
     ...
-
-
-SCHEMA_PATH = "schemas"
-SCHEMA_NAMES = {
-    DocumentNames.start: "schemas/run_start.json",
-    DocumentNames.stop: "schemas/run_stop.json",
-    DocumentNames.event: "schemas/event.json",
-    DocumentNames.event_page: "schemas/event_page.json",
-    DocumentNames.descriptor: "schemas/event_descriptor.json",
-    DocumentNames.datum: "schemas/datum.json",
-    DocumentNames.datum_page: "schemas/datum_page.json",
-    DocumentNames.resource: "schemas/resource.json",
-    DocumentNames.stream_datum: "schemas/stream_datum.json",
-    DocumentNames.stream_resource: "schemas/stream_resource.json",
-    DocumentNames.bulk_datum: "schemas/bulk_datum.json",
-    DocumentNames.bulk_events: "schemas/bulk_events.json",
-}
-schemas = {}
-for name, filename in SCHEMA_NAMES.items():
-    ref = importlib_resources.files("event_model") / filename
-    with ref.open() as f:
-        schemas[name] = json.load(f)
 
 
 def _is_array(checker, instance):

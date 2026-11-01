@@ -9,13 +9,13 @@ from pydantic import BaseModel
 from pydantic.alias_generators import to_snake
 from pydantic.json_schema import GenerateJsonSchema
 
-from event_model.basemodels import ALL_BASEMODELS
+from bluesky_interfaces.documents.basemodels import ALL_BASEMODELS
 
 #: Path to JSON schema files.
-JSONSCHEMA = Path(__file__).parent.parent / "schemas"
+JSONSCHEMA = Path(__file__).parent.parent / "jsonschemas"
 
 #: Path to TypedDict documents.
-TYPEDDICTS = Path(__file__).parent.parent / "documents"
+TYPEDDICTS = Path(__file__).parent.parent / "typed_dicts"
 
 #: Name each document is emitted under, keyed by module name.
 DOCUMENT_NAMES: dict[str, str] = {
@@ -219,7 +219,7 @@ def generate_jsonschema(
     return jsonschema_path
 
 
-GENERATED_INIT_PY = """# generated in `event_model/generate`
+GENERATED_INIT_PY = """# generated in `bluesky_interfaces/documents/generate`
 
 from typing import Generic, Literal, TypeVar
 
@@ -227,7 +227,7 @@ from typing import Generic, Literal, TypeVar
 # NamedTuple cannot yet be generic.
 from typing_extensions import NamedTuple
 
-from event_model.document_names import DocumentNames
+from bluesky_interfaces.documents.document_names import DocumentNames
 
 {imports}
 
@@ -332,7 +332,9 @@ def generate(jsonschema_root: Path = JSONSCHEMA, documents_root: Path = TYPEDDIC
     for basemodel in ALL_BASEMODELS:
         generate_jsonschema(basemodel, jsonschema_root=jsonschema_root)
     for jsonschema_path in jsonschema_root.iterdir():
-        if not jsonschema_path.name.startswith("bulk"):
+        if not jsonschema_path.name.startswith(
+            "bulk"
+        ) and not jsonschema_path.name.startswith("_"):
             generate_typeddict(jsonschema_path, documents_root=documents_root)
 
     generate_init_py(documents_root)
