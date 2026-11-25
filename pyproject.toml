@@ -76,12 +76,12 @@ ignore_missing_imports = true # Ignore missing stubs in imported modules
 # Run pytest with all our checkers, and don't spam us with massive tracebacks on error
 addopts = """
     --tb=native -vv
-    --cov=src/event_model --cov-report term --cov-report xml:cov.xml
+    --cov=bluesky_interfaces --cov-report term --cov-report xml:cov.xml
     """
 # https://iscinumpy.gitlab.io/post/bound-version-constraints/#watch-for-warnings
 filterwarnings = "error"
 # Doctest python code in docs, python code in src docstrings, test functions in tests
-testpaths = "src/event_model/tests"
+testpaths = ["tests"]
 
 [tool.coverage.run]
 patch = ["subprocess"]
