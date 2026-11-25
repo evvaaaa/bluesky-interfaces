@@ -1,6 +1,15 @@
 from abc import abstractmethod
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
-from typing import Any, Generic, Literal, ParamSpec, Protocol, TypeAlias, TypeVar, runtime_checkable
+from typing import (
+    Any,
+    Generic,
+    Literal,
+    ParamSpec,
+    Protocol,
+    TypeAlias,
+    TypeVar,
+    runtime_checkable,
+)
 
 from event_model.documents import Datum, StreamDatum, StreamResource
 from event_model.documents.event import PartialEvent
@@ -48,11 +57,14 @@ class Reading(Generic[T], ReadingOptional):
     timestamp: float
 
 
-Asset: TypeAlias = tuple[Literal["resource"], PartialResource] | tuple[Literal["datum"], Datum]
+Asset: TypeAlias = (
+    tuple[Literal["resource"], PartialResource] | tuple[Literal["datum"], Datum]
+)
 
 
 StreamAsset: TypeAlias = (
-    tuple[Literal["stream_resource"], StreamResource] | tuple[Literal["stream_datum"], StreamDatum]
+    tuple[Literal["stream_resource"], StreamResource]
+    | tuple[Literal["stream_datum"], StreamDatum]
 )
 
 
@@ -163,7 +175,9 @@ class WritesExternalAssets(Protocol):
 @runtime_checkable
 class WritesStreamAssets(Protocol):
     @abstractmethod
-    def collect_asset_docs(self, index: int | None = None) -> SyncOrAsyncIterator[StreamAsset]:
+    def collect_asset_docs(
+        self, index: int | None = None
+    ) -> SyncOrAsyncIterator[StreamAsset]:
         """Create the resource and datum documents describing data in external
             source up to a given index if provided.
 
@@ -315,7 +329,9 @@ class Readable(HasName, Protocol[T]):
 @runtime_checkable
 class Collectable(HasName, Protocol):
     @abstractmethod
-    def describe_collect(self) -> SyncOrAsync[dict[str, DataKey] | dict[str, dict[str, DataKey]]]:
+    def describe_collect(
+        self,
+    ) -> SyncOrAsync[dict[str, DataKey] | dict[str, dict[str, DataKey]]]:
         """This is like ``describe()`` on readable devices, but with an extra layer of nesting.
 
         Since a flyer can potentially return more than one event stream, this is either
@@ -546,7 +562,10 @@ def check_supports(obj: T, protocol: type[Any]) -> T:
         readable = check_supports(obj, Readable)
         readable.read()
     """
-    assert isinstance(obj, protocol), "%s does not implement all %s methods" % (obj, protocol.__name__)  # noqa: UP031
+    assert isinstance(obj, protocol), "%s does not implement all %s methods" % (
+        obj,
+        protocol.__name__,
+    )  # noqa: UP031
     return obj
 
 
