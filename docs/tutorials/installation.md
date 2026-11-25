@@ -27,6 +27,16 @@ You can now use `pip` to install the library and its dependencies:
 $ python3 -m pip install bluesky-interfaces
 ```
 
+For document composition and JSON Schema validation, install the `jsonschema`
+extra. For Pydantic document models, install the `basemodels` extra:
+
+```
+$ python3 -m pip install 'bluesky-interfaces[jsonschema]'
+$ python3 -m pip install 'bluesky-interfaces[basemodels]'
+```
+
+The `typeddict` documents and protocols  do not require either extra.
+
 If you require a feature that is not currently released you can also install
 from github:
 

@@ -21,7 +21,7 @@ requires-python = ">=3.11"
 
 [project.optional-dependencies]
 jsonschema = ["jsonschema>=4"]
-basemodels = ["pydantic"]
+basemodels = ["pydantic>=2"]
 
 [dependency-groups]
 dev = [
