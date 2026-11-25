@@ -1,26 +1,25 @@
 import pytest
 from jsonschema.exceptions import ValidationError
 
-import event_model
+from bluesky_interfaces.documents.document_names import DocumentNames
+from bluesky_interfaces.documents.jsonschemas import compose_run, schema_validators
 
 
 @pytest.fixture
 def start():
-    run_bundle = event_model.compose_run()
+    run_bundle = compose_run()
     return run_bundle.start_doc
 
 
 def test_projection_in_start_doc():
-    run_bundle = event_model.compose_run(
-        uid="42", metadata={"projections": valid_projections}
-    )
+    run_bundle = compose_run(uid="42", metadata={"projections": valid_projections})
     start_doc = run_bundle.start_doc
     assert start_doc["projections"] == valid_projections
 
 
 def test_projection_schema(start):
     start["projections"] = valid_projections
-    event_model.schema_validators[event_model.DocumentNames.start].validate(start)
+    schema_validators[DocumentNames.start].validate(start)
 
 
 def test_bad_calc_field(start):
@@ -45,7 +44,7 @@ def test_bad_calc_field(start):
     with pytest.raises(
         ValidationError,
     ):
-        event_model.schema_validators[event_model.DocumentNames.start].validate(start)
+        schema_validators[DocumentNames.start].validate(start)
 
 
 def test_bad_configuration_field(start):
@@ -71,7 +70,7 @@ def test_bad_configuration_field(start):
     with pytest.raises(
         ValidationError,
     ):
-        event_model.schema_validators[event_model.DocumentNames.start].validate(start)
+        schema_validators[DocumentNames.start].validate(start)
 
 
 def test_bad_event_field(start):
@@ -94,7 +93,7 @@ def test_bad_event_field(start):
     with pytest.raises(
         ValidationError,
     ):
-        event_model.schema_validators[event_model.DocumentNames.start].validate(start)
+        schema_validators[DocumentNames.start].validate(start)
 
 
 def test_bad_location_field(start):
@@ -117,7 +116,7 @@ def test_bad_location_field(start):
     with pytest.raises(
         ValidationError,
     ):
-        event_model.schema_validators[event_model.DocumentNames.start].validate(start)
+        schema_validators[DocumentNames.start].validate(start)
 
 
 def test_bad_static_field(start):
@@ -140,7 +139,7 @@ def test_bad_static_field(start):
     with pytest.raises(
         ValidationError,
     ):
-        event_model.schema_validators[event_model.DocumentNames.start].validate(start)
+        schema_validators[DocumentNames.start].validate(start)
 
 
 valid_projections = [
