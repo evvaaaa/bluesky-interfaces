@@ -70,18 +70,12 @@ def test_composed_documents_match_the_name_they_are_emitted_under(tmp_path):
         DocumentNames.resource: resource.resource_doc,
         DocumentNames.stream_resource: stream.stream_resource_doc,
         DocumentNames.datum: resource.compose_datum(datum_kwargs={"slice": 5}),
-        DocumentNames.datum_page: resource.compose_datum_page(
-            datum_kwargs={"slice": [6]}
-        ),
-        DocumentNames.event: descriptor.compose_event(
-            data={"motor": 0}, timestamps={"motor": 0}
-        ),
+        DocumentNames.datum_page: resource.compose_datum_page(datum_kwargs={"slice": [6]}),
+        DocumentNames.event: descriptor.compose_event(data={"motor": 0}, timestamps={"motor": 0}),
         DocumentNames.event_page: descriptor.compose_event_page(
             data={"motor": [1]}, timestamps={"motor": [1]}
         ),
-        DocumentNames.stream_datum: stream.compose_stream_datum(
-            indices={"start": 0, "stop": 1}
-        ),
+        DocumentNames.stream_datum: stream.compose_stream_datum(indices={"start": 0, "stop": 1}),
         DocumentNames.stop: run.compose_stop(),
     }
 

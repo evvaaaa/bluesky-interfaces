@@ -17,6 +17,7 @@ import bluesky_interfaces
 
 # General information about the project.
 project = "bluesky-interfaces"
+author = "Brookhaven National Lab"
 
 # The full version, including alpha/beta/rc tags.
 release = bluesky_interfaces.__version__
@@ -170,9 +171,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, "event-model", "Bluesky Event Model Documentation", [author], 1)
-]
+man_pages = [(master_doc, "event-model", "Bluesky Event Model Documentation", [author], 1)]
 
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,

@@ -102,9 +102,7 @@ class EventModelValidationError(EventModelError): ...
 
 def _is_array(checker, instance):
     return (
-        jsonschema.validators.Draft202012Validator.TYPE_CHECKER.is_type(
-            instance, "array"
-        )
+        jsonschema.validators.Draft202012Validator.TYPE_CHECKER.is_type(instance, "array")
         or isinstance(instance, tuple)
         or hasattr(instance, "__array__")
     )
@@ -118,9 +116,7 @@ _Validator = jsonschema.validators.extend(
     jsonschema.validators.Draft202012Validator, type_checker=_array_type_checker
 )
 
-schema_validators = {
-    name: _Validator(schema=schema) for name, schema in schemas.items()
-}
+schema_validators = {name: _Validator(schema=schema) for name, schema in schemas.items()}
 
 
 @dataclass
@@ -423,9 +419,7 @@ class ComposeStop:
     ) -> RunStop:
         if self.poison_pill:
             raise EventModelError(
-                "Already composed a RunStop document for run {!r}.".format(
-                    self.start["uid"]
-                )
+                "Already composed a RunStop document for run {!r}.".format(self.start["uid"])
             )
         self.poison_pill.append(object())
         if uid is None:
@@ -499,8 +493,7 @@ class ComposeEventPage:
         )
         data_length = _length_of_value(
             data,
-            "Cannot compose event_page: event_page contains `data` "
-            "lists of different lengths",
+            "Cannot compose event_page: event_page contains `data` lists of different lengths",
         )
         assert timestamps_length == data_length, (
             "Cannot compose event_page: the lists in `timestamps` are of a different "
@@ -509,9 +502,7 @@ class ComposeEventPage:
 
         if seq_num is None:
             last_seq_num = self.event_counters[self.descriptor["name"]]
-            seq_num = list(
-                range(last_seq_num, len(next(iter(data.values()))) + last_seq_num)
-            )
+            seq_num = list(range(last_seq_num, len(next(iter(data.values()))) + last_seq_num))
         count = len(seq_num)
         if uid is None:
             uid = [str(uuid.uuid4()) for _ in range(count)]
@@ -538,9 +529,7 @@ class ComposeEventPage:
                     )
                 )
                 == set(_keys_without_stream_keys(data, self.descriptor["data_keys"]))
-                == set(
-                    _keys_without_stream_keys(timestamps, self.descriptor["data_keys"])
-                )
+                == set(_keys_without_stream_keys(timestamps, self.descriptor["data_keys"]))
             ):
                 raise EventModelValidationError(
                     'These sets of keys must match (other than "STREAM:" keys):\n'
@@ -641,9 +630,7 @@ class ComposeEvent:
                     )
                 )
                 == set(_keys_without_stream_keys(data, self.descriptor["data_keys"]))
-                == set(
-                    _keys_without_stream_keys(timestamps, self.descriptor["data_keys"])
-                )
+                == set(_keys_without_stream_keys(timestamps, self.descriptor["data_keys"]))
             ):
                 raise EventModelValidationError(
                     'These sets of keys must match (other than "STREAM:" keys):\n'
@@ -765,12 +752,8 @@ class ComposeDescriptor:
 
         return ComposeDescriptorBundle(
             descriptor_doc=doc,
-            compose_event=ComposeEvent(
-                descriptor=doc, event_counters=self.event_counters
-            ),
-            compose_event_page=ComposeEventPage(
-                descriptor=doc, event_counters=self.event_counters
-            ),
+            compose_event=ComposeEvent(descriptor=doc, event_counters=self.event_counters),
+            compose_event_page=ComposeEventPage(descriptor=doc, event_counters=self.event_counters),
         )
 
 

@@ -22,7 +22,7 @@ from event_model.documents.resource import PartialResource
 # TypedDict and Unpack are imported from typing_extensions rather than typing:
 # typing_extensions.TypedDict carries backported fixes recommended until Python
 # 3.12, and typing.Unpack is only available from Python 3.11 (floor is 3.10).
-from typing_extensions import TypedDict, Unpack
+from typing_extensions import TypedDict
 
 # Squashes warning
 Dtype = Dtype  # type: ignore
@@ -57,14 +57,11 @@ class Reading(Generic[T], ReadingOptional):
     timestamp: float
 
 
-Asset: TypeAlias = (
-    tuple[Literal["resource"], PartialResource] | tuple[Literal["datum"], Datum]
-)
+Asset: TypeAlias = tuple[Literal["resource"], PartialResource] | tuple[Literal["datum"], Datum]
 
 
 StreamAsset: TypeAlias = (
-    tuple[Literal["stream_resource"], StreamResource]
-    | tuple[Literal["stream_datum"], StreamDatum]
+    tuple[Literal["stream_resource"], StreamResource] | tuple[Literal["stream_datum"], StreamDatum]
 )
 
 
@@ -175,9 +172,7 @@ class WritesExternalAssets(Protocol):
 @runtime_checkable
 class WritesStreamAssets(Protocol):
     @abstractmethod
-    def collect_asset_docs(
-        self, index: int | None = None
-    ) -> SyncOrAsyncIterator[StreamAsset]:
+    def collect_asset_docs(self, index: int | None = None) -> SyncOrAsyncIterator[StreamAsset]:
         """Create the resource and datum documents describing data in external
             source up to a given index if provided.
 
@@ -371,7 +366,7 @@ class EventPageCollectable(Collectable, Protocol):
 @runtime_checkable
 class Movable(Protocol[T_co]):
     @abstractmethod
-    def set(self, *args: Unpack[tuple[T_co]]) -> Status:
+    def set(self, *args: *tuple[T_co]) -> Status:
         """Return a ``Status`` that is marked done when the device is done moving."""
         ...
 
@@ -562,10 +557,7 @@ def check_supports(obj: T, protocol: type[Any]) -> T:
         readable = check_supports(obj, Readable)
         readable.read()
     """
-    assert isinstance(obj, protocol), "%s does not implement all %s methods" % (
-        obj,
-        protocol.__name__,
-    )  # noqa: UP031
+    assert isinstance(obj, protocol), f"{obj} does not implement all {protocol.__name__} methods"  # noqa: UP031
     return obj
 
 

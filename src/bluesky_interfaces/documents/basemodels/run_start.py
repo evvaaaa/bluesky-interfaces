@@ -18,14 +18,13 @@ class DataType(RootModel):
     root: Any = Field(default=None)
 
     @field_validator("root")
+    @classmethod
     def validate_root(cls, value):
         if not isinstance(value, dict):
             return value
         for key, val in value.items():
             if not re.match(NO_DOTS_PATTERN, key):
-                raise ValueError(
-                    f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'"
-                )
+                raise ValueError(f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'")
             if isinstance(val, dict):
                 value[key] = DataType(val)
         return value
@@ -50,9 +49,7 @@ class Calculation(BaseModel):
     model_config = ConfigDict(extra="allow")
 
     args: Annotated[list, Field(default=[])]
-    callable: Annotated[
-        str, Field(description="callable function to perform calculation")
-    ]
+    callable: Annotated[str, Field(description="callable function to perform calculation")]
     kwargs: Annotated[
         dict[str, Any],
         Field(description="kwargs for calcalation callable", default={}),
@@ -70,11 +67,7 @@ class ConfigurationProjection(BaseModel):
 
     type: Annotated[
         Literal["linked"],
-        Field(
-            description=(
-                "Projection is of type linked, a value linked from the data set."
-            )
-        ),
+        Field(description=("Projection is of type linked, a value linked from the data set.")),
     ]
     config_index: Annotated[int, Field()]
     config_device: Annotated[str, Field()]
@@ -90,11 +83,7 @@ class LinkedEventProjection(BaseModel):
 
     type: Annotated[
         Literal["linked"],
-        Field(
-            description=(
-                "Projection is of type linked, a value linked from the data set."
-            )
-        ),
+        Field(description=("Projection is of type linked, a value linked from the data set.")),
     ]
     field: Annotated[str, Field()]
     stream: Annotated[str, Field()]
@@ -108,11 +97,7 @@ class CalculatedEventProjection(BaseModel):
 
     type: Annotated[
         Literal["calculated"],
-        Field(
-            description=(
-                "Projection is of type calculated, a value that requires calculation."
-            )
-        ),
+        Field(description=("Projection is of type calculated, a value that requires calculation.")),
     ]
     field: Annotated[str, Field()]
     stream: Annotated[str, Field()]
@@ -128,15 +113,9 @@ class CalculatedEventProjection(BaseModel):
 class StaticProjection(BaseModel):
     type: Annotated[
         Literal["static"],
-        Field(
-            description=(
-                "Projection is of type static, a value defined here in the projection"
-            )
-        ),
+        Field(description=("Projection is of type static, a value defined here in the projection")),
     ]
-    value: Annotated[
-        Any, Field(description="value explicitely defined in the static projection")
-    ]
+    value: Annotated[Any, Field(description="value explicitely defined in the static projection")]
 
 
 RUN_START_EXTRA_SCHEMA: JsonDict = {
@@ -234,8 +213,7 @@ class RunStart(BaseModel):
     sample: Annotated[
         dict[str, Any] | str,
         Field(
-            description="Information about the sample, may be a UID to "
-            "another collection",
+            description="Information about the sample, may be a UID to another collection",
             default="",
         ),
     ]
@@ -252,9 +230,7 @@ class RunStart(BaseModel):
         extra_values = {k: v for k, v in values.items() if k not in cls.model_fields}
         for key, value in extra_values.items():
             if not re.match(NO_DOTS_PATTERN, key):
-                raise ValueError(
-                    f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'"
-                )
+                raise ValueError(f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'")
             if isinstance(value, dict):
                 values[key] = DataType(root=value)
         return values

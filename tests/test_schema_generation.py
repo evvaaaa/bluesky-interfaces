@@ -16,9 +16,7 @@ def test_generated_json_matches_typed_dict(tmp_path: Path):
     generate(jsonschema_root=tmp_jsonschema, documents_root=tmp_documents)
 
     assert {path.name for path in tmp_jsonschema.glob("*.json")} == {
-        path.name
-        for path in JSONSCHEMA.glob("*.json")
-        if not path.name.startswith("bulk")
+        path.name for path in JSONSCHEMA.glob("*.json") if not path.name.startswith("bulk")
     }
     assert {path.name for path in tmp_documents.glob("*.py")} == {
         path.name for path in TYPEDDICTS.glob("*.py")

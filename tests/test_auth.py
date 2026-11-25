@@ -21,9 +21,7 @@ def test_data_session():
     assert start_doc["data_groups"] == ["a", "b"]
 
     with pytest.raises(ValidationError):
-        compose_run(
-            uid="42", metadata={"data_session": ["shoud", "not", "be", "a", "list"]}
-        )
+        compose_run(uid="42", metadata={"data_session": ["shoud", "not", "be", "a", "list"]})
 
     with pytest.raises(ValidationError):
         compose_run(uid="42", metadata={"data_groups": "this should be an array"})

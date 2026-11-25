@@ -22,13 +22,10 @@ class DatumPage(BaseModel):
     datum_kwargs: Annotated[
         dict[str, list[Any]],
         Field(
-            description="Array of arguments to pass to the Handler to "
-            "retrieve one quanta of data"
+            description="Array of arguments to pass to the Handler to retrieve one quanta of data"
         ),
     ]
     resource: Annotated[
         str,
-        Field(
-            description="The UID of the Resource to which all Datums in the page belong"
-        ),
+        Field(description="The UID of the Resource to which all Datums in the page belong"),
     ]

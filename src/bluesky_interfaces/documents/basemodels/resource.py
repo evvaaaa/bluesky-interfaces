@@ -13,25 +13,17 @@ class PartialResource(BaseModel):
             "identify a compatible Handler"
         ),
     ]
-    resource_path: Annotated[
-        str, Field(description="Filepath or URI for locating this resource")
-    ]
+    resource_path: Annotated[str, Field(description="Filepath or URI for locating this resource")]
     resource_kwargs: Annotated[
         dict[str, Any],
-        Field(
-            description="Additional argument to pass to the Handler to read a Resource"
-        ),
+        Field(description="Additional argument to pass to the Handler to read a Resource"),
     ]
 
     root: Annotated[
         str,
-        Field(
-            description="Subset of resource_path that is a local detail, not semantic."
-        ),
+        Field(description="Subset of resource_path that is a local detail, not semantic."),
     ]
-    uid: Annotated[
-        str, Field(description="Globally unique identifier for this Resource")
-    ]
+    uid: Annotated[str, Field(description="Globally unique identifier for this Resource")]
 
 
 class Resource(PartialResource):

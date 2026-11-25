@@ -22,8 +22,7 @@ class Datum(BaseModel):
     datum_kwargs: Annotated[
         dict[str, Any],
         Field(
-            description="Arguments to pass to the Handler to "
-            "retrieve one quanta of data",
+            description="Arguments to pass to the Handler to retrieve one quanta of data",
         ),
     ]
     resource: Annotated[

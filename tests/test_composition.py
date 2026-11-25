@@ -65,9 +65,7 @@ def test_compose_stream_resource(tmp_path):
     resource_doc, compose_stream_datum = bundle
     assert bundle.stream_resource_doc is resource_doc
     assert bundle.compose_stream_datum is compose_stream_datum
-    datum = compose_stream_datum(
-        StreamRange(start=0, stop=2), StreamRange(start=1, stop=3)
-    )
+    datum = compose_stream_datum(StreamRange(start=0, stop=2), StreamRange(start=1, stop=3))
     assert datum["stream_resource"] == resource_doc["uid"]
     assert datum["indices"] == {"start": 0, "stop": 2}
     assert datum["seq_nums"] == {"start": 1, "stop": 3}

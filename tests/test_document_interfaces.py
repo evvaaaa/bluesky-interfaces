@@ -105,9 +105,7 @@ def test_compose_documents_and_validate_schemas():
     assert page["seq_num"] == [2]
     with pytest.raises(EventModelValidationError, match="sets of keys must match"):
         descriptor.compose_event(data={}, timestamps={})
-    resource = run.compose_resource(
-        spec="test", root="/", resource_path="data", resource_kwargs={}
-    )
+    resource = run.compose_resource(spec="test", root="/", resource_path="data", resource_kwargs={})
     datum = resource.compose_datum(datum_kwargs={"index": 1})
     datum_page = resource.compose_datum_page(datum_kwargs={"index": [2, 3]})
     assert datum["datum_id"].endswith("/0")

@@ -18,14 +18,13 @@ class DataType(RootModel):
     root: Any = Field(default=None)
 
     @field_validator("root")
+    @classmethod
     def validate_root(cls, value):
         if not isinstance(value, dict):
             return value
         for key, val in value.items():
             if not re.match(NO_DOTS_PATTERN, key):
-                raise ValueError(
-                    f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'"
-                )
+                raise ValueError(f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'")
             if isinstance(val, dict):
                 value[key] = DataType(val)
         return value
@@ -83,9 +82,7 @@ class RunStop(BaseModel):
         extra_values = {k: v for k, v in values.items() if k not in cls.model_fields}
         for key, value in extra_values.items():
             if not re.match(NO_DOTS_PATTERN, key):
-                raise ValueError(
-                    f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'"
-                )
+                raise ValueError(f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'")
             if isinstance(value, dict):
                 values[key] = DataType(value)
         return values

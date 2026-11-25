@@ -15,10 +15,7 @@ class StreamResource(BaseModel):
 
     data_key: Annotated[
         str,
-        Field(
-            description="A string to show which data_key of the "
-            "Descriptor are being streamed"
-        ),
+        Field(description="A string to show which data_key of the Descriptor are being streamed"),
     ]
     parameters: Annotated[
         dict[str, Any],
@@ -43,6 +40,4 @@ class StreamResource(BaseModel):
             "used to identify a compatible Handler",
         ),
     ]
-    uid: Annotated[
-        str, Field(description="Globally unique identifier for this Stream Resource")
-    ]
+    uid: Annotated[str, Field(description="Globally unique identifier for this Stream Resource")]
