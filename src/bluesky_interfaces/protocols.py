@@ -1,6 +1,15 @@
 from abc import abstractmethod
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
-from typing import Any, Generic, Literal, ParamSpec, Protocol, TypeAlias, TypeVar, runtime_checkable
+from typing import (
+    Any,
+    Generic,
+    Literal,
+    ParamSpec,
+    Protocol,
+    TypeAlias,
+    TypeVar,
+    runtime_checkable,
+)
 
 from event_model.documents import Datum, StreamDatum, StreamResource
 from event_model.documents.event import PartialEvent
@@ -13,7 +22,7 @@ from event_model.documents.resource import PartialResource
 # TypedDict and Unpack are imported from typing_extensions rather than typing:
 # typing_extensions.TypedDict carries backported fixes recommended until Python
 # 3.12, and typing.Unpack is only available from Python 3.11 (floor is 3.10).
-from typing_extensions import TypedDict, Unpack
+from typing_extensions import TypedDict
 
 # Squashes warning
 Dtype = Dtype  # type: ignore
@@ -315,7 +324,9 @@ class Readable(HasName, Protocol[T]):
 @runtime_checkable
 class Collectable(HasName, Protocol):
     @abstractmethod
-    def describe_collect(self) -> SyncOrAsync[dict[str, DataKey] | dict[str, dict[str, DataKey]]]:
+    def describe_collect(
+        self,
+    ) -> SyncOrAsync[dict[str, DataKey] | dict[str, dict[str, DataKey]]]:
         """This is like ``describe()`` on readable devices, but with an extra layer of nesting.
 
         Since a flyer can potentially return more than one event stream, this is either
@@ -355,7 +366,7 @@ class EventPageCollectable(Collectable, Protocol):
 @runtime_checkable
 class Movable(Protocol[T_co]):
     @abstractmethod
-    def set(self, *args: Unpack[tuple[T_co]]) -> Status:
+    def set(self, *args: *tuple[T_co]) -> Status:
         """Return a ``Status`` that is marked done when the device is done moving."""
         ...
 
@@ -546,7 +557,7 @@ def check_supports(obj: T, protocol: type[Any]) -> T:
         readable = check_supports(obj, Readable)
         readable.read()
     """
-    assert isinstance(obj, protocol), "%s does not implement all %s methods" % (obj, protocol.__name__)  # noqa: UP031
+    assert isinstance(obj, protocol), f"{obj} does not implement all {protocol.__name__} methods"  # noqa: UP031
     return obj
 
 

@@ -4,8 +4,8 @@ import jsonschema
 import pytest
 from jsonschema.exceptions import ValidationError
 
-import event_model
-from event_model import DocumentNames, schema_validators
+from bluesky_interfaces.documents.document_names import DocumentNames
+from bluesky_interfaces.documents.jsonschemas import compose_run, schema_validators
 
 
 def new_uid():
@@ -13,7 +13,7 @@ def new_uid():
 
 
 def test_data_session():
-    run_bundle = event_model.compose_run(
+    run_bundle = compose_run(
         uid="42",
         metadata={"data_groups": ["a", "b"], "data_session": "magrathia_visit_42"},
     )
@@ -21,14 +21,10 @@ def test_data_session():
     assert start_doc["data_groups"] == ["a", "b"]
 
     with pytest.raises(ValidationError):
-        event_model.compose_run(
-            uid="42", metadata={"data_session": ["shoud", "not", "be", "a", "list"]}
-        )
+        compose_run(uid="42", metadata={"data_session": ["shoud", "not", "be", "a", "list"]})
 
     with pytest.raises(ValidationError):
-        event_model.compose_run(
-            uid="42", metadata={"data_groups": "this should be an array"}
-        )
+        compose_run(uid="42", metadata={"data_groups": "this should be an array"})
 
 
 def test_dots_not_allowed_in_keys():
@@ -107,6 +103,7 @@ def test_bad_numpy_datakeys(dtype_numpy):
             }
         },
         "run_start": new_uid(),
+        "name": "primary",
     }
     with pytest.raises(
         jsonschema.ValidationError,

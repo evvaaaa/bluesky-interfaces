@@ -33,9 +33,7 @@ class StreamDatum(BaseModel):
     ]
     stream_resource: Annotated[
         str,
-        Field(
-            description="The UID of the Stream Resource to which this Datum belongs."
-        ),
+        Field(description="The UID of the Stream Resource to which this Datum belongs."),
     ]
     uid: Annotated[
         str,
@@ -46,10 +44,7 @@ class StreamDatum(BaseModel):
     ]
     seq_nums: Annotated[
         StreamRange,
-        Field(
-            description="A slice object showing the Event numbers the "
-            "resource corresponds to"
-        ),
+        Field(description="A slice object showing the Event numbers the resource corresponds to"),
     ]
     indices: Annotated[
         StreamRange,

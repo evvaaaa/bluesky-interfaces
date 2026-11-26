@@ -107,9 +107,7 @@ def sort_schema(document_schema: dict[str, Any]) -> dict[str, Any]:
                 document_schema[key] = sort_alphabetically(document_schema[key])
                 for key2 in document_schema[key]:
                     if isinstance(document_schema[key][key2], dict):
-                        document_schema[key][key2] = sort_schema(
-                            document_schema[key][key2]
-                        )
+                        document_schema[key][key2] = sort_schema(document_schema[key][key2])
             elif isinstance(document_schema[key], list):
                 document_schema[key].sort()
 
@@ -163,9 +161,7 @@ def _generate_jsonschema(
     refs = []
 
     for parent in [parent for parent in basemodel.__bases__ if parent is not BaseModel]:
-        assert issubclass(
-            parent, BaseModel
-        )  # Parents of BaseModel's can only be other BaseModel
+        assert issubclass(parent, BaseModel)  # Parents of BaseModel's can only be other BaseModel
         parent_jsonschema = _generate_jsonschema(
             parent,
             jsonschema_root=jsonschema_root,
@@ -180,9 +176,7 @@ def _generate_jsonschema(
     model_jsonschema = merge_dicts(model_jsonschema, schema_extra)
 
     additional_properties = (
-        model_jsonschema.pop("additionalProperties", None)
-        if is_parent or refs
-        else None
+        model_jsonschema.pop("additionalProperties", None) if is_parent or refs else None
     )
 
     if refs:
@@ -273,17 +267,10 @@ def generate_init_py(output_root: Path):
         ]
     )
 
-    document_class_names = [
-        f"{snake_to_title(module_name)}" for module_name in module_names
-    ]
+    document_class_names = [f"{snake_to_title(module_name)}" for module_name in module_names]
 
     init_py_imports = "\n".join(
-        sorted(
-            [
-                f"from .{module_name} import *  # noqa: F403"
-                for module_name in module_names
-            ]
-        )
+        sorted([f"from .{module_name} import *  # noqa: F403" for module_name in module_names])
     )
 
     named_aliases = "\n".join(
@@ -291,9 +278,7 @@ def generate_init_py(output_root: Path):
             f"Named{class_name} = DocWrapper[Literal["
             f"DocumentNames.{DOCUMENT_NAMES[module_name]}], {class_name}]"
             "  # noqa: F405"
-            for module_name, class_name in zip(
-                module_names, document_class_names, strict=True
-            )
+            for module_name, class_name in zip(module_names, document_class_names, strict=True)
         ]
     )
 
@@ -332,9 +317,7 @@ def generate(jsonschema_root: Path = JSONSCHEMA, documents_root: Path = TYPEDDIC
     for basemodel in ALL_BASEMODELS:
         generate_jsonschema(basemodel, jsonschema_root=jsonschema_root)
     for jsonschema_path in jsonschema_root.iterdir():
-        if not jsonschema_path.name.startswith(
-            "bulk"
-        ) and not jsonschema_path.name.startswith("_"):
+        if not jsonschema_path.name.startswith("bulk") and not jsonschema_path.name.startswith("_"):
             generate_typeddict(jsonschema_path, documents_root=documents_root)
 
     generate_init_py(documents_root)

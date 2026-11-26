@@ -23,14 +23,13 @@ class DataType(RootModel):
     root: Any = Field(alias="DataType")
 
     @field_validator("root")
+    @classmethod
     def validate_root(cls, value):
         if not isinstance(value, dict):
             return value
         for key, val in value.items():
             if not re.match(NO_DOTS_PATTERN, key):
-                raise ValueError(
-                    f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'"
-                )
+                raise ValueError(f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'")
             if isinstance(val, dict):
                 value[key] = DataType(val)
         return value
@@ -78,18 +77,10 @@ class Limits(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    control: Annotated[
-        LimitsRange | None, Field(default=None, description="Control limits.")
-    ]
-    display: Annotated[
-        LimitsRange | None, Field(default=None, description="Display limits.")
-    ]
-    warning: Annotated[
-        LimitsRange | None, Field(default=None, description="Warning limits.")
-    ]
-    alarm: Annotated[
-        LimitsRange | None, Field(default=None, description="Alarm limits.")
-    ]
+    control: Annotated[LimitsRange | None, Field(default=None, description="Control limits.")]
+    display: Annotated[LimitsRange | None, Field(default=None, description="Display limits.")]
+    warning: Annotated[LimitsRange | None, Field(default=None, description="Warning limits.")]
+    alarm: Annotated[LimitsRange | None, Field(default=None, description="Alarm limits.")]
 
     hysteresis: Annotated[float | None, Field(default=None, description="Hysteresis.")]
     rds: Annotated[RdsRange | None, Field(default=None, description="RDS parameters.")]
@@ -137,16 +128,13 @@ class DataKey(BaseModel):
         list[str],
         Field(
             default=[],
-            description="The names for dimensions of the data. Null or empty list "
-            "if scalar data",
+            description="The names for dimensions of the data. Null or empty list if scalar data",
         ),
     ]
     dtype: Annotated[
         Dtype,
         Field(
-            description=(
-                "The type of the data in the event, given as a broad JSON schema type."
-            )
+            description=("The type of the data in the event, given as a broad JSON schema type.")
         ),
     ]
     dtype_numpy: Annotated[
@@ -165,23 +153,19 @@ class DataKey(BaseModel):
         Field(
             default="",
             validate_default=False,
-            description="Where the data is stored if it is stored external "
-            "to the events",
+            description="Where the data is stored if it is stored external to the events",
             pattern=r"^[A-Z]+:?",
         ),
     ]
     object_name: Annotated[
         str,
-        Field(
-            default="", description="The name of the object this key was pulled from."
-        ),
+        Field(default="", description="The name of the object this key was pulled from."),
     ]
     precision: Annotated[
         int | None,
         Field(
             default=None,
-            description="Number of digits after decimal place if "
-            "a floating point number",
+            description="Number of digits after decimal place if a floating point number",
         ),
     ]
     shape: Annotated[
@@ -191,9 +175,7 @@ class DataKey(BaseModel):
             "None indicates a dimension with unknown or variable length."
         ),
     ]
-    source: Annotated[
-        str, Field(description="The source (ex piece of hardware) of the data.")
-    ]
+    source: Annotated[str, Field(description="The source (ex piece of hardware) of the data.")]
     units: Annotated[
         str | None,
         Field(default=None, description="Engineering units of the value"),
@@ -229,8 +211,7 @@ class Configuration(BaseModel):
         dict[str, DataKey],
         Field(
             default={},
-            description="This describes the data stored alongside it in this "
-            "configuration object.",
+            description="This describes the data stored alongside it in this configuration object.",
         ),
     ]
     timestamps: Annotated[
@@ -307,9 +288,7 @@ class EventDescriptor(BaseModel):
     run_start: Annotated[
         str, Field(description="Globally unique ID of this run's 'start' document.")
     ]
-    time: Annotated[
-        float, Field(description="Creation time of the document as unix epoch time.")
-    ]
+    time: Annotated[float, Field(description="Creation time of the document as unix epoch time.")]
     uid: Annotated[
         str,
         Field(description="Globally unique ID for this event descriptor.", title="uid"),
@@ -321,9 +300,7 @@ class EventDescriptor(BaseModel):
         extra_values = {k: v for k, v in values.items() if k not in cls.model_fields}
         for key, value in extra_values.items():
             if not re.match(NO_DOTS_PATTERN, key):
-                raise ValueError(
-                    f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'"
-                )
+                raise ValueError(f"Key '{key}' does not match pattern '{NO_DOTS_PATTERN}'")
             if isinstance(value, dict):
                 values[key] = DataType(value)
         return values

@@ -1,3 +1,16 @@
+"""Pydantic models for bluesky documents."""
+
+try:
+    import pydantic as _pydantic  # noqa: F401
+except ModuleNotFoundError as exc:
+    if exc.name != "pydantic":
+        raise
+    raise ModuleNotFoundError(
+        "Document models require pydantic. "
+        "Install it with 'pip install bluesky-interfaces[basemodels]'.",
+        name="pydantic",
+    ) from exc
+
 from .datum import Datum
 from .datum_page import DatumPage
 from .event import Event
